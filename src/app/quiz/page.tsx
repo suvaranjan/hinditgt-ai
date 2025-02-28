@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { questions } from "@/data/questions";
 import { Button } from "@/components/ui/button";
@@ -34,6 +34,24 @@ type Question = {
 };
 
 export default function QuizPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background p-4 flex items-center justify-center">
+          <Card className="w-full max-w-2xl p-8">
+            <div className="text-center">
+              <p className="text-lg">Loading quiz...</p>
+            </div>
+          </Card>
+        </div>
+      }
+    >
+      <QuizContent />
+    </Suspense>
+  );
+}
+
+function QuizContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -391,7 +409,6 @@ export default function QuizPage() {
                 Previous
               </Button>
 
-              {/* {currentQuestionIndex === filteredQuestions.length - 1 ? ( */}
               <Button
                 onClick={handleSubmitQuiz}
                 disabled={answeredCount === 0}
@@ -399,9 +416,7 @@ export default function QuizPage() {
               >
                 Submit Quiz
               </Button>
-              {/* // ) : ( */}
               <Button onClick={goToNextQuestion}>Next</Button>
-              {/* // )} */}
             </div>
           </CardFooter>
         </Card>

@@ -55,7 +55,7 @@ function QuizContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Get quiz parameters from URL
+  // Get quiz parameters from URL .. Okay
   const subject = searchParams.get("subject") || "All";
   const questionCount = Number.parseInt(
     searchParams.get("questionCount") || "20"
